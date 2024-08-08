@@ -2,21 +2,24 @@
 """
 Minimum Operations:
 In a text file, there is a single character H.
-Your can execute only two operations in this file: Copy All and Paste.
-Given a number n, write a method that calculates the fewest number of operations
-needed to result in exactly n H characters in the file.
-- Prototype: def minOperations(n): n must be an integer >= 2
-- Returns an integer
-- If n is impossible to achieve, return 0
+You can execute only two operations in this file: Copy All and Paste.
+
+This simple alogrithm will calculates the fewest number of operations
+needed to result in exactly n.'H' characters in the file.
+
+- Prototype: def minOperations(n: int) -> int:
+- n must be an integer >= 2
+- Returns n of operations or if n is impossible to achieve, return 0
 
 Example:
 >>> n = 6
 >>> H => Copy All => Paste => HH => Paste => HHH => Copy All => Paste => HHHHHH
->>> Number of operations: 5
+>>> Minimum number of operations: 5
 """
 
 
 def minOperations(n):
+    """Minimum Operations to reach n.'H' characters"""
     if n < 2 or type(n) is not int or n is None:
         return 0
 
