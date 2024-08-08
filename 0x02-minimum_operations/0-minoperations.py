@@ -24,12 +24,9 @@ def minOperations(n):
         return 0
 
     operations = 0
-    divisor = 2
-
-    while n > 1:
-        while n % divisor == 0:
-            operations += divisor
-            n //= divisor
-        divisor += 1
+    for i in range(2, n):
+        while n % i == 0:
+            operations += i
+            n //= i
 
     return operations
