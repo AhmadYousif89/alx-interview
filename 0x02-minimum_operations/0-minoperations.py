@@ -20,7 +20,7 @@ Example:
 
 def minOperations(n):
     """Minimum Operations to reach n.'H' characters"""
-    if n <= 1:
+    if type(n) is not int or n <= 1:
         return 0
 
     operations = 0
