@@ -1,0 +1,36 @@
+'''
+Run the command below to execute these test cases.
+python3 -m doctest -v test_minoperations
+
+>>> minOperations = __import__('0-minoperations').minOperations
+>>> minOperations(-12)
+0
+
+>>> minOperations(0)
+0
+
+>>> minOperations(1.4)
+0
+
+>>> minOperations('1')
+0
+
+>>> minOperations(1)
+0
+
+>>> minOperations(5)
+5
+
+>>> minOperations(21)
+10
+
+>>> minOperations(972)
+19
+
+>>> minOperations(19170307)
+47613
+
+>>> minOperations(2147483640)
+326
+
+'''
