@@ -13,33 +13,34 @@ def validUTF8(data):
         bool: True if data is a valid UTF-8 encoding, False otherwise.
     """
     # Counter for the number of bytes in the current character
-    remaining_bytes = 0
-    # Mask to check the most significant bit (10000000)
-    first_bit_mask = 1 << 7
-    # Mask to check the second most significant bit (01000000)
-    second_bit_mask = 1 << 6
+    n_bytes = 0
+    # Masks to check if the most significant bit is set or not
+    mask1 = 1 << 7
+    mask2 = 1 << 6
 
-    for current_byte in data:
-        current_bit_mask = 1 << 7
-        if remaining_bytes == 0:
-            # Determine the number of bytes for the current character
-            while current_byte & current_bit_mask:
-                remaining_bytes += 1
-                current_bit_mask >>= 1
-            if remaining_bytes == 0:
-                continue  # Single byte character (0xxxxxxx)
-            # Invalid scenarios: 1-byte character or more than 4 bytes
-            if remaining_bytes == 1 or remaining_bytes > 4:
+    for num in data:
+        # Get only the 8 least significant bits
+        byte = num & 0xFF
+
+        if n_bytes == 0:
+            # Determine how many bytes the UTF-8 character has
+            mask = 1 << 7
+            while byte & mask:
+                n_bytes += 1
+                mask = mask >> 1
+
+            # 1 byte characters
+            if n_bytes == 0:
+                continue
+
+            # Invalid scenarios
+            if n_bytes == 1 or n_bytes > 4:
                 return False
         else:
-            # If we're expecting more bytes, they must start with '10' in 'b'
-            if not (
-                current_byte & first_bit_mask
-                and not (current_byte & second_bit_mask)
-            ):
+            # Check if the byte is of the form 10xxxxxx
+            if not (byte & mask1 and not (byte & mask2)):
                 return False
-        # After checking a byte, we expect one less byte in the character
-        remaining_bytes -= 1
 
-    # If we've correctly processed all bytes, num_bytes should be 0
-    return remaining_bytes == 0
+        n_bytes -= 1
+
+    return n_bytes == 0
