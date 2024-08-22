@@ -32,11 +32,10 @@ In UTF-8, characters can be encoded using 1 to 4 bytes, following these rules:
 
 ## Python Implementation
 
-def validUTF8(data): # Number of bytes in the current UTF-8 character
-n_bytes = 0
-
 ```py
-    # Mask to check if the most significant bit is set or not
+def validUTF8(data): # Number of bytes in the current UTF-8 character
+    n_bytes = 0
+    # Masks to check if the most significant bit is set or not
     mask1 = 1 << 7
     mask2 = 1 << 6
 
