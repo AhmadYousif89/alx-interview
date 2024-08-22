@@ -34,8 +34,9 @@ def validUTF8(data):
                 return False
         else:
             # If we're expecting more bytes, they must start with '10' in 'b'
-            if not current_byte & first_bit_mask and (
-                current_byte & second_bit_mask
+            if not (
+                current_byte & first_bit_mask
+                and not (current_byte & second_bit_mask)
             ):
                 return False
         # After checking a byte, we expect one less byte in the character
