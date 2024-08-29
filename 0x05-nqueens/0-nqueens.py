@@ -78,25 +78,25 @@ def nqueens_puzzle(N):
 #             solve_puzzle(board, row + 1, N, results)
 
 
-# def is_safe(board, row, col):
-#     """
-#     Helper function that checks the board before placing a queen.
-#     Args:
-#     - board (list): The current working chessboard.
-#     - row (int): The queen last position on a row.
-#     - col (int): The queen last position on a col.
-#     Return:
-#     - True if it's safe to place the queen or False otherwise.
-#     """
-#     # Check if there is a queen in the same column
-#     for i in range(row):
-#         if (
-#             board[i] == col  # queen vertically in the same column
-#             or board[i] + i == col + row  # queen in the right diagonal
-#             or board[i] - i == col - row  # queen in the left diagonal
-#         ):
-#             return False
-#     return True
+def is_safe(board, row, col):
+    """
+    Helper function that checks the board before placing a queen.
+    Args:
+    - board (list): The current working chessboard.
+    - row (int): The queen last position on a row.
+    - col (int): The queen last position on a col.
+    Return:
+    - True if it's safe to place the queen or False otherwise.
+    """
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if (
+            board[i] == col  # queen vertically in the same column
+            or board[i] + i == col + row  # queen in the right diagonal
+            or board[i] - i == col - row  # queen in the left diagonal
+        ):
+            return False
+    return True
 
 
 if __name__ == "__main__":
