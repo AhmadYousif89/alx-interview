@@ -89,9 +89,9 @@ def is_safe(board, row, col):
     # Check if there is a queen in the same column
     for i in range(row):
         if (
-            board[i] == col or # queen vertically in the same column
-            board[i] + i == col + row or # queen in the right diagonal
-            board[i] - i == col - row # queen in the left diagonal
+            board[i] == col or  # queen vertically in the same column
+            board[i] + i == col + row or  # queen in the right diagonal
+            board[i] - i == col - row  # queen in the left diagonal
         ):
             return False
     return True
