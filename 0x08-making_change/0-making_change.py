@@ -3,6 +3,8 @@
 Soulving the making change problem with minimum number of coins
 """
 
+from collections import deque
+
 
 def makeChange(coins, total):
     """
@@ -16,22 +18,29 @@ def makeChange(coins, total):
     Returns :
     -   int : minimum number of coins needed to make the change amount
     """
+
     if total <= 0:
         return 0
-    if len(coins) == 0:
-        return -1
-    # Sort the coins for easy iteration
-    coins.sort()
-    # Initialize the dp array with infinity, and set the first element to 0
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-    for i in range(1, total + 1):
-        for j in range(len(coins)):
-            if coins[j] <= i:
-                dp[i] = min(dp[i], dp[i - coins[j]] + 1)
-            else:
-                break
-    return dp[total] if dp[total] != float('inf') else -1
+
+    # Queue for BFS, storing (current_total, number_of_coins_used)
+    queue = deque([(0, 0)])
+    # Set to track visited amounts to avoid redundant work
+    visited = set([0])
+
+    while queue:
+        current_total, num_coins = queue.popleft()
+        # Try each coin to see what total we can reach
+        for coin in coins:
+            next_total = current_total + coin
+            # If we hit the target total, return the number of coins used
+            if next_total == total:
+                return num_coins + 1
+            # If next total is valid and hasn't been visited, add to queue
+            if next_total < total and next_total not in visited:
+                visited.add(next_total)
+                queue.append((next_total, num_coins + 1))
+    # If we exhaust the queue without finding the exact total, return -1
+    return -1
 
 
 if __name__ == "__main__":
