@@ -4,35 +4,30 @@
 
 def getPrimeNumbers(n):
     """Get all prime numbers up to (n)"""
-    plength = n + 1
-    primes = [True for _ in range(plength)]
-
-    primes[0] = primes[1] = False
+    primes = [True] * (n + 1)
     p = 2
     while p * p <= n:
         if primes[p]:
-            for i in range(p * p, plength, p):
+            for i in range(p * p, n + 1, p):
                 primes[i] = False
         p += 1
 
-    prime_numbers = [p for p in range(2, plength) if primes[p]]
-    return prime_numbers
+    return primes
 
 
 def playGame(n):
     """Simulate a single round of the game with (n) numbers"""
     primes = getPrimeNumbers(n)
-    remaining_numbers = [True] * (n + 1)  # Track available numbers
+    available_numbers = [True] * (n + 1)  # Track available numbers
     turn = 0  # 0 = Maria's turn, 1 = Ben's turn
 
-    while primes:
-        # The current player picks the first available prime
-        prime = primes[0]
-        # Remove the prime and all its multiples
-        for i in range(prime, n + 1, prime):
-            remaining_numbers[i] = False
-        # Update primes by filtering out unavailable numbers
-        primes = [p for p in primes if remaining_numbers[p]]
+    for n in range(2, n + 1):
+        if not primes[n]:  # Skip non-prime numbers
+            available_numbers[n] = False
+            continue
+        # If the number is prime, remove all multiples of it
+        for multiply in range(n * 2, n + 1, n):
+            available_numbers[multiply] = False
         # Switch turns
         turn = 1 - turn
 
