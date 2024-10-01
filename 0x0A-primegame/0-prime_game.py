@@ -4,30 +4,30 @@
 
 def getPrimeNumbers(n):
     """Get all prime numbers up to (n)"""
-    primes = [True] * (n + 1)
+    primes = [1] * (n + 1)
     p = 2
     while p * p <= n:
         if primes[p]:
             for i in range(p * p, n + 1, p):
-                primes[i] = False
+                primes[i] = 0
         p += 1
 
     return primes
 
 
-def playGame(n):
+def playPrimeGame(n):
     """Simulate a single round of the game with (n) numbers"""
     primes = getPrimeNumbers(n)
-    available_numbers = [True] * (n + 1)  # Track available numbers
+    available_numbers = [1] * (n + 1)  # Track available numbers
     turn = 0  # 0 = Maria's turn, 1 = Ben's turn
 
     for n in range(2, n + 1):
         if not primes[n]:  # Skip non-prime numbers
-            available_numbers[n] = False
+            available_numbers[n] = 0
             continue
         # If the number is prime, remove all multiples of it
         for multiply in range(n * 2, n + 1, n):
-            available_numbers[multiply] = False
+            available_numbers[multiply] = 0
         # Switch turns
         turn = 1 - turn
 
@@ -54,7 +54,7 @@ def isWinner(x, nums):
     ben_wins = 0
 
     for n in nums:
-        winner = playGame(n)
+        winner = playPrimeGame(n)
         if winner == 'Maria':
             maria_wins += 1
         else:
@@ -63,20 +63,20 @@ def isWinner(x, nums):
         return 'Maria'
     if ben_wins > maria_wins:
         return 'Ben'
-    return None
+    return None  # A Draw
 
 
 if __name__ == '__main__':
     print("Prime Game Challenge")
     print("Winner: {}".format(isWinner(0, [])))  # None
-    print("Winner: {}".format(isWinner(1, [1])))  # None
-    print("Winner: {}".format(isWinner(1, [2])))  # win Maria
-    print("Winner: {}".format(isWinner(1, [3])))  # win Ben
-    print("Winner: {}".format(isWinner(2, [1, 2])))  # win Maria
-    print("Winner: {}".format(isWinner(2, [2, 3])))  # win Ben
-    print("Winner: {}".format(isWinner(3, [1, 4, 7])))  # win Ben
-    print("Winner: {}".format(isWinner(3, [2, 3, 5])))  # win Maria
-    print("Winner: {}".format(isWinner(3, [1, 1, 1])))  # win Ben
-    print("Winner: {}".format(isWinner(3, [2, 2, 2])))  # win Maria
-    print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))  # win Ben
+    print("Winner: {}".format(isWinner(1, [1])))  # Ben
+    print("Winner: {}".format(isWinner(1, [2])))  # Maria
+    print("Winner: {}".format(isWinner(1, [3])))  # Ben
+    print("Winner: {}".format(isWinner(2, [1, 2])))  # None
+    print("Winner: {}".format(isWinner(2, [2, 3])))  # None
+    print("Winner: {}".format(isWinner(3, [1, 4, 7])))  # Ben
+    print("Winner: {}".format(isWinner(3, [2, 3, 5])))  # Maria
+    print("Winner: {}".format(isWinner(3, [1, 1, 1])))  # Ben
+    print("Winner: {}".format(isWinner(3, [2, 2, 2])))  # Maria
+    print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))  # Ben
     print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3, 6])))  # None
